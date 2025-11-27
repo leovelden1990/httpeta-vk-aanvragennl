@@ -43,7 +43,7 @@ const Index = () => {
     <div className="min-h-screen">
       <Hero />
       
-      <section className="container mx-auto px-4 py-20">
+      <section className="container mx-auto px-4 py-12 md:py-20">
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-4xl">Waarom kiezen voor onze service?</h2>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
@@ -66,7 +66,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="bg-muted/50 py-20">
+      <section className="bg-muted/50 py-12 md:py-20">
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold md:text-4xl">Hoe werkt het?</h2>
@@ -112,8 +112,8 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="container mx-auto px-4 py-20">
-        <div className="mb-12 text-center">
+      <section className="container mx-auto px-4 py-12 md:py-20">
+        <div className="mb-8 text-center md:mb-12">
           <h2 className="mb-4 text-3xl font-bold md:text-4xl">Veelgestelde vragen</h2>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
             Antwoorden op de meest gestelde vragen over UK ETA
@@ -162,9 +162,9 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="bg-primary py-20 text-primary-foreground">
+      <section className="bg-primary py-12 text-primary-foreground md:py-20">
         <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
+          <div className="mb-8 text-center md:mb-12">
             <h2 className="mb-4 text-3xl font-bold md:text-4xl">Neem contact met ons op</h2>
             <p className="mx-auto max-w-2xl text-lg opacity-90">
               Heeft u vragen over uw UK ETA aanvraag? Ons team staat 24/7 voor u klaar
