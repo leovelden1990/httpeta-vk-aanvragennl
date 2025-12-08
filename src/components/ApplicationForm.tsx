@@ -7,6 +7,8 @@ import PersonalInfoStep from "./form-steps/PersonalInfoStep";
 import PassportStep from "./form-steps/PassportStep";
 import DocumentUploadStep from "./form-steps/DocumentUploadStep";
 import ReviewStep from "./form-steps/ReviewStep";
+import { personalInfoSchema, passportSchema, validateStep } from "@/lib/validations/applicationSchema";
+import { toast } from "sonner";
 
 export interface FormData {
   nationality: string;
@@ -24,6 +26,7 @@ export interface FormData {
 
 const ApplicationForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [formData, setFormData] = useState<FormData>({
     nationality: "",
     firstName: "",
@@ -46,21 +49,79 @@ const ApplicationForm = () => {
     { number: 4, title: "Overzicht & betaling", component: ReviewStep },
   ];
 
+  const validateCurrentStep = (): boolean => {
+    let validationResult: { success: boolean; errors: Record<string, string> };
+
+    switch (currentStep) {
+      case 1:
+        validationResult = validateStep(personalInfoSchema, {
+          nationality: formData.nationality,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          dateOfBirth: formData.dateOfBirth,
+          email: formData.email,
+          phone: formData.phone,
+        });
+        break;
+      case 2:
+        validationResult = validateStep(passportSchema, {
+          passportNumber: formData.passportNumber,
+          passportExpiry: formData.passportExpiry,
+          arrivalDate: formData.arrivalDate,
+        });
+        break;
+      default:
+        return true;
+    }
+
+    setErrors(validationResult.errors);
+    
+    if (!validationResult.success) {
+      toast.error("Vul alle verplichte velden correct in");
+    }
+    
+    return validationResult.success;
+  };
+
   const handleNext = () => {
-    if (currentStep < totalSteps) {
+    if (validateCurrentStep() && currentStep < totalSteps) {
+      setErrors({});
       setCurrentStep(currentStep + 1);
     }
   };
 
   const handlePrevious = () => {
     if (currentStep > 1) {
+      setErrors({});
       setCurrentStep(currentStep - 1);
     }
   };
 
   const handleSubmit = () => {
-    console.log("Form submitted:", formData);
-    // Handle form submission
+    // Final validation before submit
+    const personalResult = validateStep(personalInfoSchema, {
+      nationality: formData.nationality,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      dateOfBirth: formData.dateOfBirth,
+      email: formData.email,
+      phone: formData.phone,
+    });
+
+    const passportResult = validateStep(passportSchema, {
+      passportNumber: formData.passportNumber,
+      passportExpiry: formData.passportExpiry,
+      arrivalDate: formData.arrivalDate,
+    });
+
+    if (!personalResult.success || !passportResult.success) {
+      toast.error("Er zijn nog validatiefouten in het formulier");
+      return;
+    }
+
+    // Log success without sensitive data
+    console.log("Form submitted successfully");
+    toast.success("Aanvraag succesvol ingediend!");
   };
 
   const CurrentStepComponent = steps[currentStep - 1].component;
@@ -83,7 +144,7 @@ const ApplicationForm = () => {
         </CardHeader>
         
         <CardContent className="space-y-6">
-          <CurrentStepComponent formData={formData} setFormData={setFormData} />
+          <CurrentStepComponent formData={formData} setFormData={setFormData} errors={errors} />
           
           <div className="flex justify-between pt-6">
             <Button
