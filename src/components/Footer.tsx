@@ -45,9 +45,9 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="#requirements" className="text-muted-foreground transition-colors hover:text-foreground">
+                <Link to="/terms" className="text-muted-foreground transition-colors hover:text-foreground">
                   Voorwaarden
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#tracking" className="text-muted-foreground transition-colors hover:text-foreground">
