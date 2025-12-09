@@ -370,8 +370,8 @@ const TermsAndConditions = () => {
                 info@uketaservice.nl
               </a>{" "}
               of via telefoon op{" "}
-              <a href="tel:+31201234567" className="text-primary hover:underline">
-                +31 (0)20 123 4567
+              <a href="tel:+31686490091" className="text-primary hover:underline">
+                +31 6 86 49 00 91
               </a>
               . We zullen proberen om uw vragen snel te beantwoorden.
             </p>
