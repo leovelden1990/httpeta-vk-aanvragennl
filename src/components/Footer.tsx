@@ -101,14 +101,14 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-2">
                 <Phone className="mt-0.5 h-4 w-4 flex-shrink-0 text-muted-foreground" />
-                <a href="tel:+31201234567" className="text-muted-foreground transition-colors hover:text-foreground">
-                  +31 (0)20 123 4567
+                <a href="tel:+31686490091" className="text-muted-foreground transition-colors hover:text-foreground">
+                  +31 6 86 49 00 91
                 </a>
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-muted-foreground" />
                 <span className="text-muted-foreground">
-                  Amsterdam, Nederland
+                  Slotermeerlaan 58, 1064HC Amsterdam
                 </span>
               </li>
             </ul>
