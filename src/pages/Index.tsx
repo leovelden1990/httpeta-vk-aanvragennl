@@ -193,8 +193,8 @@ const Index = () => {
                 <CardTitle className="text-primary-foreground">Telefoon</CardTitle>
               </CardHeader>
               <CardContent>
-                <a href="tel:+31207776543" className="hover:underline">
-                  +31 20 777 65 43
+                <a href="tel:+31686490091" className="hover:underline">
+                  +31 6 86 49 00 91
                 </a>
                 <p className="mt-2 text-sm opacity-90">
                   24/7 bereikbaar
@@ -208,8 +208,8 @@ const Index = () => {
                 <CardTitle className="text-primary-foreground">Adres</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Herengracht 123</p>
-                <p>1015 BG Amsterdam</p>
+                <p>Slotermeerlaan 58</p>
+                <p>1064HC Amsterdam</p>
                 <p className="mt-2 text-sm opacity-90">
                   Nederland
                 </p>
