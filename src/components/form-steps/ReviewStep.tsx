@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { CheckCircle2, CreditCard } from "lucide-react";
 import { FormData } from "../ApplicationForm";
 
@@ -10,9 +9,7 @@ interface ReviewStepProps {
 }
 
 const ReviewStep = ({ formData }: ReviewStepProps) => {
-  const totalPrice = 79.95;
-  const processingFee = 19.95;
-  const governmentFee = 60.00;
+  const totalPrice = 89.00;
 
   return (
     <div className="space-y-6">
@@ -103,27 +100,13 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
           <CardDescription>Eenmalige betaling voor uw UK ETA aanvraag</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Overheidskosten UK ETA</span>
-              <span>€ {governmentFee.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Service & verwerkingskosten</span>
-              <span>€ {processingFee.toFixed(2)}</span>
-            </div>
-          </div>
-          
-          <Separator />
-          
           <div className="flex justify-between text-lg font-bold">
             <span>Totaal</span>
             <span className="text-primary">€ {totalPrice.toFixed(2)}</span>
           </div>
 
           <div className="rounded-lg bg-muted p-4 text-sm text-muted-foreground">
-            Na betaling ontvangt u een bevestigingsmail. Uw aanvraag wordt direct verwerkt 
-            en u ontvangt uw UK ETA binnen 24 uur.
+            Na betaling ontvangt u een bevestigingsmail. Uw aanvraag wordt direct verwerkt.
           </div>
         </CardContent>
       </Card>
