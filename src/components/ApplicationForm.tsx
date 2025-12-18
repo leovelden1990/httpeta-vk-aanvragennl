@@ -2,13 +2,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { ChevronRight, ChevronLeft } from "lucide-react";
+import { ChevronRight, ChevronLeft, Loader2 } from "lucide-react";
 import PersonalInfoStep from "./form-steps/PersonalInfoStep";
 import PassportStep from "./form-steps/PassportStep";
 import DocumentUploadStep from "./form-steps/DocumentUploadStep";
 import ReviewStep from "./form-steps/ReviewStep";
 import { personalInfoSchema, passportSchema, validateStep } from "@/lib/validations/applicationSchema";
 import { toast } from "sonner";
+import { createDirectCheckout } from "@/lib/shopify";
 
 export interface FormData {
   nationality: string;
@@ -27,6 +28,7 @@ export interface FormData {
 const ApplicationForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     nationality: "",
     firstName: "",
@@ -97,7 +99,7 @@ const ApplicationForm = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Final validation before submit
     const personalResult = validateStep(personalInfoSchema, {
       nationality: formData.nationality,
@@ -119,9 +121,28 @@ const ApplicationForm = () => {
       return;
     }
 
-    // Log success without sensitive data
-    console.log("Form submitted successfully");
-    toast.success("Aanvraag succesvol ingediend!");
+    setIsSubmitting(true);
+
+    try {
+      // UK ETA Aanvraag product variant ID
+      const variantId = "gid://shopify/ProductVariant/57052864381315";
+      
+      // Create Shopify checkout
+      const checkoutUrl = await createDirectCheckout(variantId, 1);
+      
+      // Store form data in localStorage for after payment
+      localStorage.setItem('eta_application_data', JSON.stringify(formData));
+      
+      toast.success("Doorsturen naar betaling...");
+      
+      // Redirect to Shopify checkout in new tab
+      window.open(checkoutUrl, '_blank');
+    } catch (error) {
+      console.error("Checkout error:", error);
+      toast.error("Er is een fout opgetreden. Probeer het opnieuw.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const CurrentStepComponent = steps[currentStep - 1].component;
@@ -162,8 +183,15 @@ const ApplicationForm = () => {
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             ) : (
-              <Button onClick={handleSubmit}>
-                Aanvraag indienen
+              <Button onClick={handleSubmit} disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Verwerken...
+                  </>
+                ) : (
+                  "Betalen & Indienen"
+                )}
               </Button>
             )}
           </div>
