@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { AlertTriangle } from "lucide-react";
+import { Mail } from "lucide-react";
 
 const Disclaimer = () => {
   return (
@@ -7,105 +7,120 @@ const Disclaimer = () => {
       <div className="mx-auto max-w-4xl">
         <div className="mb-8">
           <h1 className="mb-4 text-4xl font-bold tracking-tight">Disclaimer</h1>
-          <p className="text-muted-foreground">Laatst bijgewerkt: 1 januari 2025</p>
-        </div>
-
-        <div className="mb-8 rounded-lg border border-amber-200 bg-amber-50 p-6 dark:border-amber-900 dark:bg-amber-950">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600 dark:text-amber-400" />
-            <div>
-              <h3 className="font-semibold text-amber-800 dark:text-amber-200">Belangrijke mededeling</h3>
-              <p className="mt-1 text-sm text-amber-700 dark:text-amber-300">
-                Wij zijn geen overheidsinstantie. IBO Exclusive is een commerciële dienstverlener 
-                die bemiddelings- en ondersteuningsdiensten aanbiedt bij het indienen van ETA-aanvragen.
-              </p>
-            </div>
-          </div>
         </div>
 
         <div className="prose prose-gray max-w-none dark:prose-invert">
           <section className="mb-8">
-            <h2 className="mb-4 text-2xl font-semibold">1. Algemeen</h2>
+            <h2 className="mb-4 text-2xl font-semibold">Algemene informatie</h2>
             <p className="text-muted-foreground">
-              De informatie op deze website is met de grootst mogelijke zorgvuldigheid samengesteld. 
-              Desondanks kan IBO Exclusive geen garanties geven met betrekking tot de volledigheid, 
-              juistheid of actualiteit van de verstrekte informatie.
+              Deze website biedt een betaalde bemiddelings- en ondersteuningsdienst voor het indienen van ETA-aanvragen. 
+              Onze dienstverlening is erop gericht om reizigers te helpen bij het correct, zorgvuldig en efficiënt 
+              aanleveren en indienen van hun aanvraag.
+            </p>
+            <p className="mt-4 text-muted-foreground">
+              Wij handelen onder de handelsnaam IBO Exclusive en zijn gevestigd te Amsterdam, Nederland.
             </p>
           </section>
 
           <Separator className="my-8" />
 
           <section className="mb-8">
-            <h2 className="mb-4 text-2xl font-semibold">2. Geen overheidsinstantie</h2>
+            <h2 className="mb-4 text-2xl font-semibold">Onze dienstverlening</h2>
             <p className="text-muted-foreground">
-              IBO Exclusive is uitdrukkelijk geen overheidsinstantie en is niet gelieerd aan enige 
-              overheidsinstantie. Wij bieden commerciële bemiddelings- en ondersteuningsdiensten aan 
-              om het aanvraagproces voor een UK ETA te vereenvoudigen.
+              Wij begeleiden klanten bij het invullen, controleren en indienen van ETA-aanvragen op basis van de 
+              door de klant verstrekte informatie. Wij zijn geen overheidsinstantie, ambassade of immigratiedienst 
+              en vertegenwoordigen geen officiële autoriteit.
+            </p>
+            <p className="mt-4 text-muted-foreground">
+              De uiteindelijke beoordeling en beslissing van een ETA-aanvraag wordt altijd genomen door de 
+              bevoegde overheidsinstanties.
             </p>
           </section>
 
           <Separator className="my-8" />
 
           <section className="mb-8">
-            <h2 className="mb-4 text-2xl font-semibold">3. Geen garantie op goedkeuring</h2>
+            <h2 className="mb-4 text-2xl font-semibold">Verwerking en zorgvuldigheid</h2>
             <p className="text-muted-foreground">
-              Wij kunnen geen garanties geven ten aanzien van de goedkeuring, afwijzing of 
-              verwerkingstijd van een ETA-aanvraag door de bevoegde autoriteiten. Beslissingen 
-              hieromtrent worden uitsluitend door de betreffende autoriteiten genomen.
+              Wij streven ernaar om iedere aanvraag met de grootst mogelijke zorgvuldigheid te verwerken. 
+              Correcte en volledige gegevens vergroten de kans op een soepele afhandeling van de aanvraag.
+            </p>
+            <p className="mt-4 text-muted-foreground">
+              De klant blijft verantwoordelijk voor het juist en volledig aanleveren van alle benodigde informatie.
             </p>
           </section>
 
           <Separator className="my-8" />
 
           <section className="mb-8">
-            <h2 className="mb-4 text-2xl font-semibold">4. Aansprakelijkheid</h2>
+            <h2 className="mb-4 text-2xl font-semibold">Verwerkingstermijnen</h2>
             <p className="text-muted-foreground">
-              IBO Exclusive is niet aansprakelijk voor schade die voortvloeit uit het gebruik van 
-              deze website of de daarop verstrekte informatie, noch voor schade die voortvloeit uit 
-              beslissingen, vertragingen of afwijzingen door overheidsinstanties.
+              Eventueel op de website genoemde verwerkingstermijnen, waaronder spoedverwerking (bijvoorbeeld 
+              verwerking binnen 1 uur), verwerking binnen 24 uur of vergelijkbare termijnen, hebben uitsluitend 
+              betrekking op onze interne verwerking en indiening van de aanvraag.
+            </p>
+            <p className="mt-4 text-muted-foreground">
+              Deze termijnen vormen geen toezegging of garantie met betrekking tot:
+            </p>
+            <ul className="mt-2 list-disc pl-6 text-muted-foreground">
+              <li>de beoordelingsduur;</li>
+              <li>de goedkeuring;</li>
+              <li>of de uiteindelijke afgifte van een ETA door bevoegde autoriteiten.</li>
+            </ul>
+            <p className="mt-4 text-muted-foreground">
+              De daadwerkelijke verwerking door overheidsinstanties kan per aanvraag verschillen en is afhankelijk 
+              van individuele omstandigheden en officiële beoordelingscriteria.
             </p>
           </section>
 
           <Separator className="my-8" />
 
           <section className="mb-8">
-            <h2 className="mb-4 text-2xl font-semibold">5. Externe links</h2>
+            <h2 className="mb-4 text-2xl font-semibold">Resultaat van de aanvraag</h2>
             <p className="text-muted-foreground">
-              Deze website kan links bevatten naar websites van derden. IBO Exclusive is niet 
-              verantwoordelijk voor de inhoud of het privacybeleid van deze externe websites.
+              Hoewel wij ons inspannen om iedere aanvraag correct in te dienen, kunnen wij geen garanties geven 
+              over de uitkomst van een ETA-aanvraag. De beslissing ligt altijd bij de bevoegde autoriteiten.
+            </p>
+            <p className="mt-4 text-muted-foreground">
+              Het gebruik van onze dienst houdt geen garantie in op goedkeuring, maar biedt professionele 
+              ondersteuning bij het aanvraagproces.
             </p>
           </section>
 
           <Separator className="my-8" />
 
           <section className="mb-8">
-            <h2 className="mb-4 text-2xl font-semibold">6. Intellectueel eigendom</h2>
+            <h2 className="mb-4 text-2xl font-semibold">Aansprakelijkheid</h2>
             <p className="text-muted-foreground">
-              Alle content op deze website, inclusief teksten, afbeeldingen, logo's en grafisch 
-              materiaal, is eigendom van IBO Exclusive en is beschermd door intellectuele 
-              eigendomsrechten. Ongeautoriseerd gebruik is niet toegestaan.
+              Wij zijn niet aansprakelijk voor beslissingen, vertragingen of beleidswijzigingen van overheidsinstanties. 
+              Onze aansprakelijkheid is in alle gevallen beperkt tot het bedrag dat de klant heeft betaald voor 
+              onze dienstverlening.
             </p>
           </section>
 
           <Separator className="my-8" />
 
           <section className="mb-8">
-            <h2 className="mb-4 text-2xl font-semibold">7. Wijzigingen</h2>
+            <h2 className="mb-4 text-2xl font-semibold">Gebruik van de website</h2>
             <p className="text-muted-foreground">
-              IBO Exclusive behoudt zich het recht voor om deze disclaimer op elk moment te 
-              wijzigen. De meest actuele versie is altijd beschikbaar op deze pagina.
+              De informatie op deze website is bedoeld voor algemene informatiedoeleinden en kan zonder 
+              voorafgaande kennisgeving worden gewijzigd. Aan de inhoud van deze website kunnen geen rechten 
+              worden ontleend.
             </p>
           </section>
 
           <Separator className="my-8" />
 
           <section className="mb-8">
-            <h2 className="mb-4 text-2xl font-semibold">8. Contact</h2>
+            <h2 className="mb-4 text-2xl font-semibold">Contact</h2>
             <p className="text-muted-foreground">
-              Voor vragen over deze disclaimer kunt u contact opnemen via{" "}
-              <a href="mailto:info@uketaservice.nl" className="text-primary hover:underline">
-                info@uketaservice.nl
-              </a>.
+              Voor vragen over onze dienstverlening of deze disclaimer kunt u contact met ons opnemen via:
+            </p>
+            <p className="mt-2 flex items-center gap-2 text-muted-foreground">
+              <Mail className="h-4 w-4" />
+              <a href="mailto:support@jouwdomein.nl" className="text-primary hover:underline">
+                support@jouwdomein.nl
+              </a>
             </p>
           </section>
         </div>
