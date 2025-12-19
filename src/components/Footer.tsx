@@ -67,23 +67,28 @@ const Footer = () => {
             <h3 className="font-semibold">Informatie</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#about" className="text-muted-foreground transition-colors hover:text-foreground">
-                  Over ons
-                </a>
+                <Link to="/contact" className="text-muted-foreground transition-colors hover:text-foreground">
+                  Contact
+                </Link>
               </li>
               <li>
-                <a href="#faq" className="text-muted-foreground transition-colors hover:text-foreground">
-                  Veelgestelde vragen
-                </a>
+                <Link to="/privacy" className="text-muted-foreground transition-colors hover:text-foreground">
+                  Privacyverklaring
+                </Link>
               </li>
               <li>
-                <a href="#privacy" className="text-muted-foreground transition-colors hover:text-foreground">
-                  Privacy beleid
-                </a>
+                <Link to="/disclaimer" className="text-muted-foreground transition-colors hover:text-foreground">
+                  Disclaimer
+                </Link>
               </li>
               <li>
                 <Link to="/terms" className="text-muted-foreground transition-colors hover:text-foreground">
                   Algemene voorwaarden
+                </Link>
+              </li>
+              <li>
+                <Link to="/return-policy" className="text-muted-foreground transition-colors hover:text-foreground">
+                  Retour- en annuleringsbeleid
                 </Link>
               </li>
             </ul>
