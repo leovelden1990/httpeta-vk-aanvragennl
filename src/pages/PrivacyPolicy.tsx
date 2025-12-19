@@ -142,6 +142,53 @@ const PrivacyPolicy = () => {
               is altijd beschikbaar op onze website.
             </p>
           </section>
+
+          <Separator className="my-8" />
+
+          <section className="mb-8">
+            <h2 className="mb-4 text-2xl font-semibold">10. Verwerkingsverantwoordelijke</h2>
+            <p className="text-muted-foreground">
+              IBO Exclusive, gevestigd te Amsterdam, Nederland, is de verwerkingsverantwoordelijke 
+              zoals bedoeld in de Algemene Verordening Gegevensbescherming (AVG) voor de verwerking 
+              van persoonsgegevens zoals beschreven in dit privacybeleid.
+            </p>
+          </section>
+
+          <Separator className="my-8" />
+
+          <section className="mb-8">
+            <h2 className="mb-4 text-2xl font-semibold">11. Externe dienstverleners (verwerkers)</h2>
+            <p className="text-muted-foreground">
+              Voor het uitvoeren van onze dienstverlening maken wij gebruik van externe dienstverleners, 
+              zoals Shopify en aangesloten betaalproviders. Deze partijen verwerken persoonsgegevens 
+              uitsluitend namens ons en in overeenstemming met de geldende privacywetgeving. Met deze 
+              partijen zijn passende verwerkersovereenkomsten gesloten conform de AVG.
+            </p>
+          </section>
+
+          <Separator className="my-8" />
+
+          <section className="mb-8">
+            <h2 className="mb-4 text-2xl font-semibold">12. Cookies en analytische diensten</h2>
+            <p className="text-muted-foreground">
+              Onze website maakt gebruik van functionele en, indien van toepassing, analytische cookies 
+              om de werking en gebruiksvriendelijkheid van de website te verbeteren. Voor zover wettelijk 
+              vereist vragen wij vooraf toestemming voor het plaatsen van cookies. U kunt uw cookievoorkeuren 
+              te allen tijde aanpassen via uw browserinstellingen.
+            </p>
+          </section>
+
+          <Separator className="my-8" />
+
+          <section className="mb-8">
+            <h2 className="mb-4 text-2xl font-semibold">13. Klachtrecht</h2>
+            <p className="text-muted-foreground">
+              Indien u van mening bent dat wij niet correct omgaan met uw persoonsgegevens, heeft u het 
+              recht een klacht in te dienen bij de Autoriteit Persoonsgegevens. Uiteraard stellen wij het 
+              op prijs indien u eerst contact met ons opneemt, zodat wij samen naar een passende oplossing 
+              kunnen zoeken.
+            </p>
+          </section>
         </div>
       </div>
     </div>
