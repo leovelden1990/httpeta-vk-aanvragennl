@@ -4,6 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Clock, Globe, Shield, Users, Zap, Mail, Phone, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+import ukTowerBridge from "@/assets/uk-tower-bridge.jpg";
 
 const Index = () => {
   const features = [
@@ -66,11 +67,18 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="bg-muted/50 py-12 md:py-20">
-        <div className="container mx-auto px-4">
+      {/* How it works section with UK background */}
+      <section className="relative py-12 md:py-20 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${ukTowerBridge})` }}
+        />
+        <div className="absolute inset-0 bg-primary/90" />
+        
+        <div className="container relative mx-auto px-4">
           <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">Hoe werkt het?</h2>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">Hoe werkt het?</h2>
+            <p className="mx-auto max-w-2xl text-lg text-white/80">
               In 4 eenvoudige stappen naar uw UK ETA
             </p>
           </div>
@@ -99,12 +107,12 @@ const Index = () => {
               },
             ].map((item) => (
               <div key={item.step} className="flex gap-6">
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground">
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white text-xl font-bold text-primary">
                   {item.step}
                 </div>
                 <div>
-                  <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
-                  <p className="text-muted-foreground">{item.description}</p>
+                  <h3 className="mb-2 text-xl font-semibold text-white">{item.title}</h3>
+                  <p className="text-white/80">{item.description}</p>
                 </div>
               </div>
             ))}
