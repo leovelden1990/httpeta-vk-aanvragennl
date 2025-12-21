@@ -112,9 +112,9 @@ const OrderSidebar = ({
   );
 
   return (
-    <div className="flex flex-col">
-      {/* Main sidebar card */}
-      <Card className="p-6 border shadow-sm bg-card rounded-none lg:rounded-tr-2xl">
+    <div className="bg-white dark:bg-card rounded-none lg:rounded-r-2xl border shadow-sm overflow-hidden">
+      {/* Header with UK flag */}
+      <div className="p-6 pb-4">
         <div className="flex items-center gap-3 mb-6">
           <UKFlag />
           <div>
@@ -130,11 +130,10 @@ const OrderSidebar = ({
 
         {/* Show checkout summary only for step 4 */}
         {step === 4 && <CheckoutSummary />}
-      </Card>
+      </div>
 
-      {/* Bottom section with privacy and buttons - always on white background */}
-      <div className="bg-white dark:bg-card p-6 rounded-none lg:rounded-br-2xl border-x border-b shadow-sm">
-        {/* Privacy section */}
+      {/* Privacy section and buttons */}
+      <div className="p-6 pt-4 border-t border-border/50">
         <div className="flex items-start gap-3 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-lg mb-4">
           <Shield className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
           <div>
