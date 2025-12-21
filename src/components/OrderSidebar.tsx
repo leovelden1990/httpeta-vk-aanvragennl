@@ -50,211 +50,132 @@ const OrderSidebar = ({
     </svg>
   );
 
-  const NavigationButtons = () => (
-    <div className="space-y-3">
-      <Button 
-        onClick={onNext}
-        disabled={isLastStep && isSubmitting}
-        className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-6 text-lg font-semibold rounded-lg"
-      >
-        {isLastStep && isSubmitting ? (
-          <>
-            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-            Verwerken...
-          </>
-        ) : (
-          <>
-            Opslaan en doorgaan
-            <ChevronRight className="ml-2 h-5 w-5" />
-          </>
-        )}
-      </Button>
+  // ETA Info Cards - shown for steps 1, 2, 3
+  const ETAInfoCards = () => (
+    <div className="space-y-4">
+      <div className="flex items-center gap-4 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/30">
+        <div className="p-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/50">
+          <Calendar className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+        </div>
+        <div>
+          <p className="text-sm text-muted-foreground">Geldig gedurende</p>
+          <p className="font-semibold text-foreground">2 jaar na afgifte</p>
+        </div>
+      </div>
 
-      {step > 1 && (
-        <button
-          onClick={onPrevious}
-          className="w-full flex items-center justify-center gap-2 py-3 text-primary hover:text-primary/80 transition-colors font-medium"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Vorige
-        </button>
-      )}
-    </div>
-  );
+      <div className="flex items-center gap-4 p-4 rounded-xl bg-blue-50 dark:bg-blue-950/30">
+        <div className="p-3 rounded-xl bg-blue-100 dark:bg-blue-900/50">
+          <Plane className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+        </div>
+        <div>
+          <p className="text-sm text-muted-foreground">Aantal reizen</p>
+          <p className="font-semibold text-foreground">Meermaals inreizen</p>
+        </div>
+      </div>
 
-  const PrivacySection = () => (
-    <div className="flex items-start gap-3 p-4 bg-primary/5 rounded-lg">
-      <Shield className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-      <div>
-        <p className="font-medium text-sm text-foreground">Wij beschermen uw gegevens.</p>
-        <a href="/privacy-policy" className="text-xs text-primary hover:underline">Bekijk ons privacybeleid</a>
+      <div className="flex items-center gap-4 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30">
+        <div className="p-3 rounded-xl bg-amber-100 dark:bg-amber-900/50">
+          <Clock className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+        </div>
+        <div>
+          <p className="text-sm text-muted-foreground">Maximaal verblijf</p>
+          <p className="font-semibold text-foreground">180 dagen per verblijf</p>
+        </div>
       </div>
     </div>
   );
 
-  // Show sidebar for step 1 (Reisdetails)
-  if (step === 1) {
-    return (
-      <Card className="p-6 border shadow-sm bg-card rounded-t-none lg:rounded-t-lg lg:rounded-l-none">
-        <div className="flex items-center gap-3 mb-6">
-          <UKFlag />
-          <h3 className="text-xl font-bold text-foreground">United Kingdom ETA</h3>
+  // Checkout Summary - only for step 4
+  const CheckoutSummary = () => (
+    <>
+      <div className="space-y-3 py-4 border-t border-b">
+        <div className="flex justify-between text-sm">
+          <span className="text-muted-foreground">Overheidskosten</span>
+          <span className="text-muted-foreground">€ {governmentTotal.toFixed(2)}</span>
         </div>
-
-        <div className="space-y-4">
-          <div className="flex items-center gap-4 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/30">
-            <div className="p-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/50">
-              <Calendar className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Geldig gedurende</p>
-              <p className="font-semibold text-foreground">2 jaar na afgifte</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4 p-4 rounded-xl bg-blue-50 dark:bg-blue-950/30">
-            <div className="p-3 rounded-xl bg-blue-100 dark:bg-blue-900/50">
-              <Plane className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Aantal reizen</p>
-              <p className="font-semibold text-foreground">Meermaals inreizen</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30">
-            <div className="p-3 rounded-xl bg-amber-100 dark:bg-amber-900/50">
-              <Clock className="h-5 w-5 text-amber-600 dark:text-amber-400" />
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Maximaal verblijf</p>
-              <p className="font-semibold text-foreground">180 dagen per verblijf</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 pt-4 border-t">
-          <div className="flex justify-between items-center text-muted-foreground">
-            <span>Totaal</span>
-            <span>Berekend bij kassa</span>
-          </div>
-        </div>
-
-        <div className="mt-6">
-          <PrivacySection />
-        </div>
-
-        <div className="mt-6">
-          <NavigationButtons />
-        </div>
-      </Card>
-    );
-  }
-
-  // Show basic info for steps 2 & 3 (passport)
-  if (step === 2 || step === 3) {
-    return (
-      <Card className="p-6 border shadow-sm bg-card rounded-t-none lg:rounded-t-lg lg:rounded-l-none">
-        <div className="flex items-center gap-3 mb-6">
-          <UKFlag />
-          <h3 className="text-xl font-bold text-foreground">United Kingdom ETA</h3>
-        </div>
-
-        <div className="space-y-4">
-          <div className="flex items-center gap-4 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/30">
-            <div className="p-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/50">
-              <Calendar className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Geldig gedurende</p>
-              <p className="font-semibold text-foreground">2 jaar na afgifte</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4 p-4 rounded-xl bg-blue-50 dark:bg-blue-950/30">
-            <div className="p-3 rounded-xl bg-blue-100 dark:bg-blue-900/50">
-              <Plane className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Aantal reizen</p>
-              <p className="font-semibold text-foreground">Meermaals inreizen</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30">
-            <div className="p-3 rounded-xl bg-amber-100 dark:bg-amber-900/50">
-              <Clock className="h-5 w-5 text-amber-600 dark:text-amber-400" />
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Maximaal verblijf</p>
-              <p className="font-semibold text-foreground">180 dagen per verblijf</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 pt-4 border-t">
-          <div className="flex justify-between items-center text-muted-foreground">
-            <span>Totaal</span>
-            <span>Berekend bij kassa</span>
-          </div>
-        </div>
-
-        <div className="mt-6">
-          <PrivacySection />
-        </div>
-
-        <div className="mt-6">
-          <NavigationButtons />
-        </div>
-      </Card>
-    );
-  }
-
-  // Show checkout summary for step 4 (kassa)
-  if (step === 4) {
-    return (
-      <Card className="p-6 border shadow-sm bg-card rounded-t-none lg:rounded-t-lg lg:rounded-l-none">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <UKFlag />
-            <span className="font-semibold text-foreground">United Kingdom ETA</span>
-          </div>
-          <span className="text-muted-foreground">{travelers} Reiziger{travelers > 1 ? 's' : ''}</span>
-        </div>
-
-        <div className="space-y-3 py-4 border-t border-b">
+        {selectedOption && (
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Overheidskosten</span>
-            <span className="text-muted-foreground">€ {governmentTotal.toFixed(2)}</span>
+            <span className="text-muted-foreground">{selectedOption.name}, {selectedOption.time}</span>
+            <span className="text-muted-foreground">€ {processingTotal.toFixed(2)}</span>
           </div>
-          {selectedOption && (
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">{selectedOption.name}, {selectedOption.time}</span>
-              <span className="text-muted-foreground">€ {processingTotal.toFixed(2)}</span>
-            </div>
+        )}
+      </div>
+
+      <div className="flex justify-between items-center mt-4">
+        <div>
+          <span className="text-lg font-bold text-foreground">Totaal</span>
+          <p className="text-xs text-muted-foreground">(Inclusief belastingen en toeslagen)</p>
+        </div>
+        <span className="text-2xl font-bold text-foreground">€ {total.toFixed(2)}</span>
+      </div>
+    </>
+  );
+
+  return (
+    <div className="flex flex-col">
+      {/* Main sidebar card */}
+      <Card className="p-6 border shadow-sm bg-card rounded-none lg:rounded-tr-2xl">
+        <div className="flex items-center gap-3 mb-6">
+          <UKFlag />
+          <div>
+            <h3 className="text-xl font-bold text-foreground">United Kingdom ETA</h3>
+            {step === 4 && (
+              <span className="text-sm text-muted-foreground">{travelers} Reiziger{travelers > 1 ? 's' : ''}</span>
+            )}
+          </div>
+        </div>
+
+        {/* Show ETA info cards for steps 1, 2, 3 */}
+        {step !== 4 && <ETAInfoCards />}
+
+        {/* Show checkout summary only for step 4 */}
+        {step === 4 && <CheckoutSummary />}
+      </Card>
+
+      {/* Bottom section with privacy and buttons - always on white background */}
+      <div className="bg-white dark:bg-card p-6 rounded-none lg:rounded-br-2xl border-x border-b shadow-sm">
+        {/* Privacy section */}
+        <div className="flex items-start gap-3 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-lg mb-4">
+          <Shield className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="font-medium text-sm text-foreground">Wij beschermen uw gegevens.</p>
+            <a href="/privacy-policy" className="text-sm text-primary hover:underline">Bekijk ons privacybeleid</a>
+          </div>
+        </div>
+
+        {/* Buttons */}
+        <div className="space-y-3">
+          <Button 
+            onClick={onNext}
+            disabled={isLastStep && isSubmitting}
+            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-6 text-lg font-semibold rounded-lg"
+          >
+            {isLastStep && isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                Verwerken...
+              </>
+            ) : (
+              <>
+                Opslaan en doorgaan
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </>
+            )}
+          </Button>
+
+          {step > 1 && (
+            <button
+              onClick={onPrevious}
+              className="w-full flex items-center justify-center gap-2 py-3 text-primary hover:text-primary/80 transition-colors font-medium"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Vorige
+            </button>
           )}
         </div>
-
-        <div className="flex justify-between items-center mt-4">
-          <div>
-            <span className="text-lg font-bold text-foreground">Totaal</span>
-            <p className="text-xs text-muted-foreground">(Inclusief belastingen en toeslagen)</p>
-          </div>
-          <span className="text-2xl font-bold text-foreground">€ {total.toFixed(2)}</span>
-        </div>
-
-        <div className="mt-6">
-          <PrivacySection />
-        </div>
-
-        <div className="mt-6">
-          <NavigationButtons />
-        </div>
-      </Card>
-    );
-  }
-
-  return null;
+      </div>
+    </div>
+  );
 };
 
 export default OrderSidebar;

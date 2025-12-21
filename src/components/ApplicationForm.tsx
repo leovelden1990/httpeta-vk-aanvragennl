@@ -286,8 +286,8 @@ const ApplicationForm = () => {
       {renderStepIndicator()}
       
       <div className="grid gap-0 lg:grid-cols-[1fr,380px]">
-        {/* Main form card - seamless connection with sidebar */}
-        <Card className="border-0 shadow-lg bg-card/95 backdrop-blur-sm rounded-b-none lg:rounded-b-lg lg:rounded-r-none">
+        {/* Main form card - seamless connection with sidebar, rounded corners on left */}
+        <Card className="border shadow-lg bg-card/95 backdrop-blur-sm rounded-none lg:rounded-l-2xl lg:rounded-r-none">
           <CardContent className="p-6 md:p-8">
             {renderStep()}
           </CardContent>
