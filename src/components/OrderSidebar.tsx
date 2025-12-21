@@ -1,11 +1,16 @@
 import { Card } from "@/components/ui/card";
-import { Calendar, Plane, Clock, Shield } from "lucide-react";
+import { Calendar, Plane, Clock, Shield, ChevronRight, Loader2, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface OrderSidebarProps {
   step: number;
   travelers?: number;
   selectedProcessing?: string;
   governmentFee?: number;
+  onNext?: () => void;
+  onPrevious?: () => void;
+  isSubmitting?: boolean;
+  isLastStep?: boolean;
 }
 
 const processingPrices: Record<string, { name: string; time: string; price: number }> = {
@@ -14,7 +19,16 @@ const processingPrices: Record<string, { name: string; time: string; price: numb
   standard: { name: "Standaard", time: "24 uur", price: 49.95 },
 };
 
-const OrderSidebar = ({ step, travelers = 1, selectedProcessing = "fast", governmentFee = 19.28 }: OrderSidebarProps) => {
+const OrderSidebar = ({ 
+  step, 
+  travelers = 1, 
+  selectedProcessing = "fast", 
+  governmentFee = 19.28,
+  onNext,
+  onPrevious,
+  isSubmitting = false,
+  isLastStep = false
+}: OrderSidebarProps) => {
   const selectedOption = processingPrices[selectedProcessing];
   const processingTotal = selectedOption ? selectedOption.price * travelers : 0;
   const governmentTotal = governmentFee * travelers;
@@ -34,6 +48,38 @@ const OrderSidebar = ({ step, travelers = 1, selectedProcessing = "fast", govern
         <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" strokeWidth="6" />
       </g>
     </svg>
+  );
+
+  const NavigationButtons = () => (
+    <div className="space-y-3">
+      <Button 
+        onClick={onNext}
+        disabled={isLastStep && isSubmitting}
+        className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-6 text-lg font-semibold rounded-lg"
+      >
+        {isLastStep && isSubmitting ? (
+          <>
+            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+            Verwerken...
+          </>
+        ) : (
+          <>
+            Opslaan en doorgaan
+            <ChevronRight className="ml-2 h-5 w-5" />
+          </>
+        )}
+      </Button>
+
+      {step > 1 && (
+        <button
+          onClick={onPrevious}
+          className="w-full flex items-center justify-center gap-2 py-3 text-primary hover:text-primary/80 transition-colors font-medium"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Vorige
+        </button>
+      )}
+    </div>
   );
 
   // Show basic info for steps 2 & 3 (passport)
@@ -91,6 +137,10 @@ const OrderSidebar = ({ step, travelers = 1, selectedProcessing = "fast", govern
             <p className="text-xs text-muted-foreground">Bekijk ons privacybeleid</p>
           </div>
         </div>
+
+        <div className="mt-6">
+          <NavigationButtons />
+        </div>
       </Card>
     );
   }
@@ -134,6 +184,10 @@ const OrderSidebar = ({ step, travelers = 1, selectedProcessing = "fast", govern
             <p className="font-medium text-sm text-foreground">Wij beschermen uw gegevens.</p>
             <p className="text-xs text-muted-foreground">Bekijk ons privacybeleid</p>
           </div>
+        </div>
+
+        <div className="mt-6">
+          <NavigationButtons />
         </div>
       </Card>
     );

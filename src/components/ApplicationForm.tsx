@@ -273,65 +273,87 @@ const ApplicationForm = () => {
   // Show sidebar for steps 2, 3, 4 (Uw informatie, Paspoort, Kassa)
   const showSidebar = currentStep >= 2;
 
+  const handleNextAction = () => {
+    if (currentStep < internalTotalSteps) {
+      handleNext();
+    } else {
+      handleSubmit();
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       {renderStepIndicator()}
       
-      <div className={`grid gap-8 ${showSidebar ? 'lg:grid-cols-[1fr,380px]' : ''}`}>
-        <Card className="border-0 shadow-lg bg-card/95 backdrop-blur-sm">
+      <div className={`grid gap-0 ${showSidebar ? 'lg:grid-cols-[1fr,380px]' : ''}`}>
+        {/* Main form card - no bottom radius when sidebar is shown */}
+        <Card className={`border-0 shadow-lg bg-card/95 backdrop-blur-sm ${showSidebar ? 'rounded-b-none lg:rounded-b-lg lg:rounded-r-none' : ''}`}>
           <CardContent className="p-6 md:p-8">
             {renderStep()}
           </CardContent>
         </Card>
 
         {showSidebar && (
-          <div className="hidden lg:block">
-            <OrderSidebar 
-              step={currentStep} 
-              travelers={travelers.length}
-              selectedProcessing={selectedProcessing}
-              governmentFee={governmentFee}
-            />
+          <div className="lg:block">
+            <div className="lg:sticky lg:top-4">
+              <OrderSidebar 
+                step={currentStep} 
+                travelers={travelers.length}
+                selectedProcessing={selectedProcessing}
+                governmentFee={governmentFee}
+                onNext={handleNextAction}
+                onPrevious={handlePrevious}
+                isSubmitting={isSubmitting}
+                isLastStep={currentStep === internalTotalSteps}
+              />
+            </div>
           </div>
         )}
-      </div>
 
-      {/* Full width button section */}
-      <div className="mt-6">
-        <Button 
-          onClick={currentStep < internalTotalSteps ? handleNext : handleSubmit} 
-          disabled={currentStep === internalTotalSteps && isSubmitting}
-          className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-6 text-lg font-semibold rounded-lg"
-        >
-          {currentStep === internalTotalSteps ? (
-            isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                Verwerken...
-              </>
-            ) : (
-              <>
-                Opslaan en doorgaan
-                <ChevronRight className="ml-2 h-5 w-5" />
-              </>
-            )
-          ) : (
-            <>
+        {/* Show buttons below form on step 1 (no sidebar) */}
+        {!showSidebar && (
+          <div className="mt-6">
+            <Button 
+              onClick={handleNext}
+              className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-6 text-lg font-semibold rounded-lg"
+            >
               Opslaan en doorgaan
               <ChevronRight className="ml-2 h-5 w-5" />
-            </>
-          )}
-        </Button>
+            </Button>
+          </div>
+        )}
 
-        {currentStep > 1 && (
-          <Button
-            variant="ghost"
-            onClick={handlePrevious}
-            className="w-full mt-3 flex items-center justify-center gap-2 text-primary hover:text-primary/80 hover:bg-transparent"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Vorige
-          </Button>
+        {/* Mobile buttons - shown below form on mobile when sidebar exists */}
+        {showSidebar && (
+          <div className="lg:hidden mt-6 space-y-3">
+            <Button 
+              onClick={handleNextAction}
+              disabled={currentStep === internalTotalSteps && isSubmitting}
+              className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-6 text-lg font-semibold rounded-lg"
+            >
+              {currentStep === internalTotalSteps && isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Verwerken...
+                </>
+              ) : (
+                <>
+                  Opslaan en doorgaan
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </>
+              )}
+            </Button>
+
+            {currentStep > 1 && (
+              <button
+                onClick={handlePrevious}
+                className="w-full flex items-center justify-center gap-2 py-3 text-primary hover:text-primary/80 transition-colors font-medium"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Vorige
+              </button>
+            )}
+          </div>
         )}
       </div>
     </div>
