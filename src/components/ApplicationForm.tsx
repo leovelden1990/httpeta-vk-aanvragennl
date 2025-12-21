@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronRight, ChevronLeft, Loader2, Check } from "lucide-react";
+import { ChevronRight, ArrowLeft, Loader2, Check } from "lucide-react";
 import BasicInfoStep from "./form-steps/BasicInfoStep";
 import TravelerInfoStep from "./form-steps/TravelerInfoStep";
 import PassportDetailsStep from "./form-steps/PassportDetailsStep";
@@ -257,39 +257,45 @@ const ApplicationForm = () => {
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       {renderStepIndicator()}
       
-      <Card className="border-0 shadow-lg">
+      <Card className="border-0 shadow-lg bg-card/95 backdrop-blur-sm">
         <CardContent className="p-6 md:p-8">
           {renderStep()}
           
-          <div className="flex justify-between mt-8 pt-6 border-t">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t">
             <Button
-              variant="outline"
+              variant="ghost"
               onClick={handlePrevious}
               disabled={currentStep === 1}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-primary hover:text-primary/80 hover:bg-transparent order-2 sm:order-1"
             >
-              <ChevronLeft className="h-4 w-4" />
-              Terug
+              <ArrowLeft className="h-4 w-4" />
+              Vorige
             </Button>
             
             {currentStep < totalSteps ? (
-              <Button onClick={handleNext} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
-                Opslaan en doorgaan
-                <ChevronRight className="ml-2 h-4 w-4" />
+              <Button 
+                onClick={handleNext} 
+                className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-lg font-semibold rounded-lg order-1 sm:order-2 w-full sm:w-auto"
+              >
+                Doorgaan
+                <ChevronRight className="ml-2 h-5 w-5" />
               </Button>
             ) : (
               <Button 
                 onClick={handleSubmit} 
                 disabled={isSubmitting}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8"
+                className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-lg font-semibold rounded-lg order-1 sm:order-2 w-full sm:w-auto"
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                     Verwerken...
                   </>
                 ) : (
-                  "Doorgaan naar betaling"
+                  <>
+                    Doorgaan naar betaling
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </>
                 )}
               </Button>
             )}

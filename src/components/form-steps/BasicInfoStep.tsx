@@ -2,7 +2,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Plus, Minus, Calendar, Globe, Users } from "lucide-react";
+import { Plus, Minus, Calendar, Plane, Clock } from "lucide-react";
 
 interface Traveler {
   id: number;
@@ -25,44 +25,44 @@ interface BasicInfoStepProps {
 }
 
 const nationalities = [
-  "Nederlands",
-  "Belgisch",
-  "Duits",
-  "Frans",
-  "Spaans",
-  "Italiaans",
-  "Portugees",
-  "Pools",
-  "Oostenrijks",
-  "Zweeds",
-  "Noors",
-  "Deens",
-  "Fins",
-  "Iers",
-  "Grieks",
-  "Tsjechisch",
-  "Hongaars",
-  "Roemeens",
-  "Bulgaars",
-  "Kroatisch",
-  "Slowaaks",
-  "Sloveens",
-  "Ests",
-  "Lets",
-  "Litouws",
-  "Cypriotisch",
-  "Maltees",
-  "Luxemburgs",
-  "Amerikaans",
-  "Canadees",
-  "Australisch",
-  "Japans",
-  "Zuid-Koreaans",
-  "Braziliaans",
-  "Mexicaans",
-  "Argentijns",
-  "Chileens",
-  "Colombiaans",
+  { name: "Nederlands", flag: "🇳🇱" },
+  { name: "Belgisch", flag: "🇧🇪" },
+  { name: "Duits", flag: "🇩🇪" },
+  { name: "Frans", flag: "🇫🇷" },
+  { name: "Spaans", flag: "🇪🇸" },
+  { name: "Italiaans", flag: "🇮🇹" },
+  { name: "Portugees", flag: "🇵🇹" },
+  { name: "Pools", flag: "🇵🇱" },
+  { name: "Oostenrijks", flag: "🇦🇹" },
+  { name: "Zweeds", flag: "🇸🇪" },
+  { name: "Noors", flag: "🇳🇴" },
+  { name: "Deens", flag: "🇩🇰" },
+  { name: "Fins", flag: "🇫🇮" },
+  { name: "Iers", flag: "🇮🇪" },
+  { name: "Grieks", flag: "🇬🇷" },
+  { name: "Tsjechisch", flag: "🇨🇿" },
+  { name: "Hongaars", flag: "🇭🇺" },
+  { name: "Roemeens", flag: "🇷🇴" },
+  { name: "Bulgaars", flag: "🇧🇬" },
+  { name: "Kroatisch", flag: "🇭🇷" },
+  { name: "Slowaaks", flag: "🇸🇰" },
+  { name: "Sloveens", flag: "🇸🇮" },
+  { name: "Ests", flag: "🇪🇪" },
+  { name: "Lets", flag: "🇱🇻" },
+  { name: "Litouws", flag: "🇱🇹" },
+  { name: "Cypriotisch", flag: "🇨🇾" },
+  { name: "Maltees", flag: "🇲🇹" },
+  { name: "Luxemburgs", flag: "🇱🇺" },
+  { name: "Amerikaans", flag: "🇺🇸" },
+  { name: "Canadees", flag: "🇨🇦" },
+  { name: "Australisch", flag: "🇦🇺" },
+  { name: "Japans", flag: "🇯🇵" },
+  { name: "Zuid-Koreaans", flag: "🇰🇷" },
+  { name: "Braziliaans", flag: "🇧🇷" },
+  { name: "Mexicaans", flag: "🇲🇽" },
+  { name: "Argentijns", flag: "🇦🇷" },
+  { name: "Chileens", flag: "🇨🇱" },
+  { name: "Colombiaans", flag: "🇨🇴" },
 ];
 
 const BasicInfoStep = ({ nationality, setNationality, travelers, setTravelers, errors }: BasicInfoStepProps) => {
@@ -87,6 +87,8 @@ const BasicInfoStep = ({ nationality, setNationality, travelers, setTravelers, e
     }
   };
 
+  const selectedNationality = nationalities.find(n => n.name === nationality);
+
   return (
     <div className="space-y-8">
       <div className="text-center space-y-2">
@@ -102,12 +104,22 @@ const BasicInfoStep = ({ nationality, setNationality, travelers, setTravelers, e
             </Label>
             <Select value={nationality} onValueChange={setNationality}>
               <SelectTrigger id="nationality" className="h-12 bg-background">
-                <SelectValue placeholder="Selecteer nationaliteit" />
+                <SelectValue placeholder="Selecteer nationaliteit">
+                  {selectedNationality && (
+                    <span className="flex items-center gap-2">
+                      <span className="text-lg">{selectedNationality.flag}</span>
+                      {selectedNationality.name}
+                    </span>
+                  )}
+                </SelectValue>
               </SelectTrigger>
-              <SelectContent className="bg-background border shadow-lg z-50">
+              <SelectContent className="bg-background border shadow-lg z-50 max-h-80">
                 {nationalities.map((nat) => (
-                  <SelectItem key={nat} value={nat} className="cursor-pointer">
-                    {nat}
+                  <SelectItem key={nat.name} value={nat.name} className="cursor-pointer">
+                    <span className="flex items-center gap-2">
+                      <span className="text-lg">{nat.flag}</span>
+                      {nat.name}
+                    </span>
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -147,34 +159,37 @@ const BasicInfoStep = ({ nationality, setNationality, travelers, setTravelers, e
           </div>
         </div>
 
-        <Card className="p-6 bg-muted/30 border-0">
-          <h3 className="text-xl font-bold text-foreground mb-6">Verenigd Koninkrijk ETA</h3>
+        <Card className="p-6 bg-card border border-border shadow-md">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="text-2xl">🇬🇧</span>
+            <h3 className="text-xl font-bold text-foreground">United Kingdom ETA</h3>
+          </div>
           <div className="space-y-4">
-            <div className="flex items-start gap-4">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <Calendar className="h-5 w-5 text-primary" />
+            <div className="flex items-center gap-4 p-4 bg-muted/50 rounded-lg">
+              <div className="p-3 bg-emerald-500/20 rounded-full">
+                <Calendar className="h-5 w-5 text-emerald-600" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Geldig gedurende</p>
-                <p className="font-semibold text-foreground">2 jaar na afgifte ervan</p>
+                <p className="font-semibold text-foreground">2 jaar na afgifte</p>
               </div>
             </div>
-            <div className="flex items-start gap-4">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <Globe className="h-5 w-5 text-primary" />
+            <div className="flex items-center gap-4 p-4 bg-muted/50 rounded-lg">
+              <div className="p-3 bg-blue-500/20 rounded-full">
+                <Plane className="h-5 w-5 text-blue-600" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Aantal reizen</p>
                 <p className="font-semibold text-foreground">Meermaals inreizen</p>
               </div>
             </div>
-            <div className="flex items-start gap-4">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <Users className="h-5 w-5 text-primary" />
+            <div className="flex items-center gap-4 p-4 bg-muted/50 rounded-lg">
+              <div className="p-3 bg-amber-500/20 rounded-full">
+                <Clock className="h-5 w-5 text-amber-600" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Maximaal verblijf</p>
-                <p className="font-semibold text-foreground">186 dagen per verblijf</p>
+                <p className="font-semibold text-foreground">180 dagen per verblijf</p>
               </div>
             </div>
           </div>

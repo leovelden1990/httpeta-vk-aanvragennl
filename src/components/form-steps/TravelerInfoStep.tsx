@@ -1,9 +1,10 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ChevronDown, User } from "lucide-react";
+import { ChevronDown, User, UserPlus, UserMinus } from "lucide-react";
 import { useState } from "react";
 
 interface Traveler {
@@ -57,6 +58,29 @@ const TravelerInfoStep = ({ travelers, setTravelers, errors }: TravelerInfoStepP
     );
   };
 
+  const addTraveler = () => {
+    const newTraveler: Traveler = {
+      id: Date.now(),
+      firstName: "",
+      lastName: "",
+      dateOfBirth: "",
+      email: "",
+      passportNationality: "",
+      passportNumber: "",
+      passportExpiry: "",
+      skipPassport: false,
+    };
+    setTravelers([...travelers, newTraveler]);
+    setOpenTravelers([...openTravelers, newTraveler.id]);
+  };
+
+  const removeTraveler = (id: number) => {
+    if (travelers.length > 1) {
+      setTravelers(travelers.filter(t => t.id !== id));
+      setOpenTravelers(openTravelers.filter(t => t !== id));
+    }
+  };
+
   const parseDateOfBirth = (dateString: string) => {
     if (!dateString) return { day: "", month: "", year: "" };
     const parts = dateString.split("-");
@@ -95,7 +119,7 @@ const TravelerInfoStep = ({ travelers, setTravelers, errors }: TravelerInfoStepP
           const dateValues = parseDateOfBirth(traveler.dateOfBirth);
           
           return (
-            <Card key={traveler.id} className="overflow-hidden">
+            <Card key={traveler.id} className="overflow-hidden border border-border">
               <Collapsible 
                 open={openTravelers.includes(traveler.id)}
                 onOpenChange={() => toggleTraveler(traveler.id)}
@@ -146,10 +170,10 @@ const TravelerInfoStep = ({ travelers, setTravelers, errors }: TravelerInfoStepP
                         value={dateValues.day ? parseInt(dateValues.day).toString() : ""}
                         onValueChange={(value) => updateDateOfBirth(traveler.id, "day", value)}
                       >
-                        <SelectTrigger className="h-12">
+                        <SelectTrigger className="h-12 bg-background">
                           <SelectValue placeholder="Dag" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="bg-background border shadow-lg z-50">
                           {days.map((day) => (
                             <SelectItem key={day} value={day.toString()}>
                               {day}
@@ -162,10 +186,10 @@ const TravelerInfoStep = ({ travelers, setTravelers, errors }: TravelerInfoStepP
                         value={dateValues.month}
                         onValueChange={(value) => updateDateOfBirth(traveler.id, "month", value)}
                       >
-                        <SelectTrigger className="h-12">
+                        <SelectTrigger className="h-12 bg-background">
                           <SelectValue placeholder="Maand" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="bg-background border shadow-lg z-50">
                           {months.map((month) => (
                             <SelectItem key={month.value} value={month.value}>
                               {month.label}
@@ -178,10 +202,10 @@ const TravelerInfoStep = ({ travelers, setTravelers, errors }: TravelerInfoStepP
                         value={dateValues.year}
                         onValueChange={(value) => updateDateOfBirth(traveler.id, "year", value)}
                       >
-                        <SelectTrigger className="h-12">
+                        <SelectTrigger className="h-12 bg-background">
                           <SelectValue placeholder="Jaar" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="bg-background border shadow-lg z-50 max-h-60">
                           {years.map((year) => (
                             <SelectItem key={year} value={year.toString()}>
                               {year}
@@ -209,11 +233,33 @@ const TravelerInfoStep = ({ travelers, setTravelers, errors }: TravelerInfoStepP
                       <p className="text-sm text-destructive">{errors[`email-${index}`]}</p>
                     )}
                   </div>
+
+                  {travelers.length > 1 && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      onClick={() => removeTraveler(traveler.id)}
+                      className="text-destructive hover:text-destructive hover:bg-destructive/10 flex items-center gap-2"
+                    >
+                      <UserMinus className="h-4 w-4" />
+                      Reiziger verwijderen
+                    </Button>
+                  )}
                 </CollapsibleContent>
               </Collapsible>
             </Card>
           );
         })}
+
+        <Button
+          type="button"
+          variant="outline"
+          onClick={addTraveler}
+          className="w-full border-dashed border-2 py-6 flex items-center gap-2 hover:bg-muted/50"
+        >
+          <UserPlus className="h-5 w-5" />
+          Extra reiziger toevoegen
+        </Button>
       </div>
     </div>
   );
