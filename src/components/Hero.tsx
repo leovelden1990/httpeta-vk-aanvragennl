@@ -19,18 +19,13 @@ const Hero = () => {
       
       <div className="container relative mx-auto px-4 py-20 md:py-32">
         <div className="flex flex-col items-center text-center">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 backdrop-blur-sm">
-            <Shield className="h-4 w-4 text-white" />
-            <span className="text-sm font-medium text-white">Officiële UK ETA Service</span>
-          </div>
-          
           <h1 className="mb-6 max-w-4xl text-4xl font-bold tracking-tight text-white md:text-6xl lg:text-5xl">
             Uw UK Electronic Travel Authorisation in minuten
           </h1>
           
           <p className="mb-10 max-w-2xl text-lg text-white/90 md:text-xl">
             Veilig, snel en betrouwbaar. Vraag uw UK ETA aan met onze gestroomlijnde 
-            online service. Goedgekeurd binnen 24 uur.
+            online service.
           </p>
           
           <div className="flex flex-col gap-4 sm:flex-row">
@@ -46,7 +41,7 @@ const Hero = () => {
             <div className="flex flex-col items-center gap-3 rounded-xl bg-white/10 p-6 backdrop-blur-sm">
               <Clock className="h-8 w-8 text-white" />
               <h3 className="text-lg font-semibold text-white">Snelle verwerking</h3>
-              <p className="text-sm text-white/80">Binnen 24 uur goedgekeurd</p>
+              <p className="text-sm text-white/80">Uw aanvraag wordt snel verwerkt</p>
             </div>
             
             <div className="flex flex-col items-center gap-3 rounded-xl bg-white/10 p-6 backdrop-blur-sm">

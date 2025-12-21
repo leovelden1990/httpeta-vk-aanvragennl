@@ -11,7 +11,7 @@ const Index = () => {
     {
       icon: Clock,
       title: "Snelle verwerking",
-      description: "Uw aanvraag wordt binnen 24 uur verwerkt en goedgekeurd",
+      description: "Uw aanvraag wordt snel en zorgvuldig verwerkt",
     },
     {
       icon: Shield,
@@ -103,7 +103,7 @@ const Index = () => {
               {
                 step: "4",
                 title: "Ontvang uw ETA",
-                description: "Uw UK ETA wordt binnen 24 uur per e-mail verstuurd",
+                description: "Uw UK ETA wordt direct na goedkeuring per e-mail naar u verstuurd",
               },
             ].map((item) => (
               <div key={item.step} className="flex gap-6">
@@ -139,13 +139,7 @@ const Index = () => {
             <AccordionItem value="item-2">
               <AccordionTrigger>Hoe lang duurt het aanvraagproces?</AccordionTrigger>
               <AccordionContent>
-                De meeste aanvragen worden binnen 24 uur verwerkt en goedgekeurd. U ontvangt uw UK ETA direct per e-mail zodra deze is goedgekeurd. In drukke periodes kan het soms iets langer duren.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-              <AccordionTrigger>Wat zijn de kosten?</AccordionTrigger>
-              <AccordionContent>
-                De totale kosten voor uw UK ETA bedragen €35. Dit bedrag omvat de officiële aanvraagkosten en onze servicekosten voor het verwerken van uw aanvraag en het bieden van 24/7 support.
+                De verwerkingstijd varieert afhankelijk van de gekozen verwerkingsoptie. U ontvangt uw UK ETA per e-mail zodra deze is goedgekeurd. In drukke periodes kan het soms iets langer duren.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4">
