@@ -112,8 +112,8 @@ const OrderSidebar = ({
   );
 
   return (
-    <div className="bg-white dark:bg-card rounded-none lg:rounded-r-2xl border shadow-sm overflow-hidden">
-      {/* Header with UK flag */}
+    <div className="bg-white dark:bg-card">
+      {/* Header with UK flag and ETA info */}
       <div className="p-6 pb-4">
         <div className="flex items-center gap-3 mb-6">
           <UKFlag />

@@ -282,33 +282,28 @@ const ApplicationForm = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="container mx-auto px-4 py-8 max-w-4xl">
       {renderStepIndicator()}
       
-      <div className="grid gap-0 lg:grid-cols-[1fr,380px]">
-        {/* Main form card - seamless connection with sidebar, rounded corners on left */}
-        <Card className="border shadow-lg bg-card/95 backdrop-blur-sm rounded-none lg:rounded-l-2xl lg:rounded-r-none">
-          <CardContent className="p-6 md:p-8">
-            {renderStep()}
-          </CardContent>
-        </Card>
+      <Card className="border shadow-lg bg-card/95 backdrop-blur-sm rounded-2xl overflow-hidden">
+        <CardContent className="p-6 md:p-8">
+          {renderStep()}
+        </CardContent>
 
-        {/* Sidebar always visible */}
-        <div className="lg:block">
-          <div className="lg:sticky lg:top-4">
-            <OrderSidebar 
-              step={currentStep} 
-              travelers={travelers.length}
-              selectedProcessing={selectedProcessing}
-              governmentFee={governmentFee}
-              onNext={handleNextAction}
-              onPrevious={handlePrevious}
-              isSubmitting={isSubmitting}
-              isLastStep={currentStep === internalTotalSteps}
-            />
-          </div>
+        {/* Sidebar content now inside the card */}
+        <div className="border-t border-border">
+          <OrderSidebar 
+            step={currentStep} 
+            travelers={travelers.length}
+            selectedProcessing={selectedProcessing}
+            governmentFee={governmentFee}
+            onNext={handleNextAction}
+            onPrevious={handlePrevious}
+            isSubmitting={isSubmitting}
+            isLastStep={currentStep === internalTotalSteps}
+          />
         </div>
-      </div>
+      </Card>
     </div>
   );
 };
