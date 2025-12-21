@@ -270,8 +270,8 @@ const ApplicationForm = () => {
     }
   };
 
-  // Show sidebar for steps 2, 3, 4 (Uw informatie, Paspoort, Kassa)
-  const showSidebar = currentStep >= 2;
+  // Always show sidebar for consistent layout
+  const showSidebar = true;
 
   const handleNextAction = () => {
     if (currentStep < internalTotalSteps) {
@@ -285,76 +285,29 @@ const ApplicationForm = () => {
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       {renderStepIndicator()}
       
-      <div className={`grid gap-0 ${showSidebar ? 'lg:grid-cols-[1fr,380px]' : ''}`}>
-        {/* Main form card - no bottom radius when sidebar is shown */}
-        <Card className={`border-0 shadow-lg bg-card/95 backdrop-blur-sm ${showSidebar ? 'rounded-b-none lg:rounded-b-lg lg:rounded-r-none' : ''}`}>
+      <div className="grid gap-0 lg:grid-cols-[1fr,380px]">
+        {/* Main form card - seamless connection with sidebar */}
+        <Card className="border-0 shadow-lg bg-card/95 backdrop-blur-sm rounded-b-none lg:rounded-b-lg lg:rounded-r-none">
           <CardContent className="p-6 md:p-8">
             {renderStep()}
           </CardContent>
         </Card>
 
-        {showSidebar && (
-          <div className="lg:block">
-            <div className="lg:sticky lg:top-4">
-              <OrderSidebar 
-                step={currentStep} 
-                travelers={travelers.length}
-                selectedProcessing={selectedProcessing}
-                governmentFee={governmentFee}
-                onNext={handleNextAction}
-                onPrevious={handlePrevious}
-                isSubmitting={isSubmitting}
-                isLastStep={currentStep === internalTotalSteps}
-              />
-            </div>
+        {/* Sidebar always visible */}
+        <div className="lg:block">
+          <div className="lg:sticky lg:top-4">
+            <OrderSidebar 
+              step={currentStep} 
+              travelers={travelers.length}
+              selectedProcessing={selectedProcessing}
+              governmentFee={governmentFee}
+              onNext={handleNextAction}
+              onPrevious={handlePrevious}
+              isSubmitting={isSubmitting}
+              isLastStep={currentStep === internalTotalSteps}
+            />
           </div>
-        )}
-
-        {/* Show buttons below form on step 1 (no sidebar) */}
-        {!showSidebar && (
-          <div className="mt-6">
-            <Button 
-              onClick={handleNext}
-              className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-6 text-lg font-semibold rounded-lg"
-            >
-              Opslaan en doorgaan
-              <ChevronRight className="ml-2 h-5 w-5" />
-            </Button>
-          </div>
-        )}
-
-        {/* Mobile buttons - shown below form on mobile when sidebar exists */}
-        {showSidebar && (
-          <div className="lg:hidden mt-6 space-y-3">
-            <Button 
-              onClick={handleNextAction}
-              disabled={currentStep === internalTotalSteps && isSubmitting}
-              className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-6 text-lg font-semibold rounded-lg"
-            >
-              {currentStep === internalTotalSteps && isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Verwerken...
-                </>
-              ) : (
-                <>
-                  Opslaan en doorgaan
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </>
-              )}
-            </Button>
-
-            {currentStep > 1 && (
-              <button
-                onClick={handlePrevious}
-                className="w-full flex items-center justify-center gap-2 py-3 text-primary hover:text-primary/80 transition-colors font-medium"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Vorige
-              </button>
-            )}
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );
