@@ -6,6 +6,7 @@ import BasicInfoStep from "./form-steps/BasicInfoStep";
 import TravelerInfoStep from "./form-steps/TravelerInfoStep";
 import PassportDetailsStep from "./form-steps/PassportDetailsStep";
 import PaymentStep from "./form-steps/PaymentStep";
+import OrderSidebar from "./OrderSidebar";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -22,10 +23,12 @@ interface Traveler {
 }
 
 const processingPrices: Record<string, number> = {
-  urgent: 139.95,
-  fast: 99.95,
-  standard: 69.95,
+  urgent: 119.95,
+  fast: 79.95,
+  standard: 49.95,
 };
+
+const governmentFee = 19.28;
 
 const ApplicationForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -47,13 +50,19 @@ const ApplicationForm = () => {
     },
   ]);
 
-  const totalSteps = 4;
+  const totalSteps = 3;
+
+  // Map internal steps to display steps (3 visible steps)
+  const getDisplayStep = (step: number) => {
+    if (step === 1) return 1; // Reisdetails
+    if (step === 2 || step === 3) return 2; // Uw informatie (includes passport)
+    return 3; // Kassa
+  };
 
   const steps = [
-    { number: 1, title: "Reisdetails", completed: false },
-    { number: 2, title: "Uw informatie", completed: false },
-    { number: 3, title: "Paspoort", completed: false },
-    { number: 4, title: "Kassa", completed: false },
+    { number: 1, title: "Reisdetails" },
+    { number: 2, title: "Uw informatie" },
+    { number: 3, title: "Kassa" },
   ];
 
   const validateStep1 = (): boolean => {
@@ -96,6 +105,10 @@ const ApplicationForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Internal steps: 1=Reisdetails, 2=Traveler Info, 3=Passport, 4=Kassa
+  // We have 4 internal steps but show only 3 in the indicator
+  const internalTotalSteps = 4;
+
   const handleNext = () => {
     let isValid = true;
     
@@ -105,7 +118,7 @@ const ApplicationForm = () => {
       isValid = validateStep2();
     }
     
-    if (isValid && currentStep < totalSteps) {
+    if (isValid && currentStep < internalTotalSteps) {
       setErrors({});
       // Update passport nationality from main nationality if not set
       if (currentStep === 1) {
@@ -182,35 +195,39 @@ const ApplicationForm = () => {
     }
   };
 
-  const renderStepIndicator = () => (
-    <div className="flex items-center justify-center mb-8">
-      {steps.map((step, index) => (
-        <div key={step.number} className="flex items-center">
-          <div className="flex flex-col items-center">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
-              currentStep > step.number 
-                ? 'bg-primary text-primary-foreground' 
-                : currentStep === step.number 
+  const renderStepIndicator = () => {
+    const displayStep = getDisplayStep(currentStep);
+    
+    return (
+      <div className="flex items-center justify-center mb-8">
+        {steps.map((step, index) => (
+          <div key={step.number} className="flex items-center">
+            <div className="flex flex-col items-center">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
+                displayStep > step.number 
                   ? 'bg-primary text-primary-foreground' 
-                  : 'bg-muted text-muted-foreground'
-            }`}>
-              {currentStep > step.number ? <Check className="h-4 w-4" /> : step.number}
+                  : displayStep === step.number 
+                    ? 'bg-primary text-primary-foreground' 
+                    : 'bg-muted text-muted-foreground'
+              }`}>
+                {displayStep > step.number ? <Check className="h-4 w-4" /> : step.number}
+              </div>
+              <span className={`text-xs mt-1 ${
+                displayStep >= step.number ? 'text-foreground font-medium' : 'text-muted-foreground'
+              }`}>
+                {step.title}
+              </span>
             </div>
-            <span className={`text-xs mt-1 ${
-              currentStep >= step.number ? 'text-foreground font-medium' : 'text-muted-foreground'
-            }`}>
-              {step.title}
-            </span>
+            {index < steps.length - 1 && (
+              <div className={`w-16 md:w-32 h-0.5 mx-2 ${
+                displayStep > step.number ? 'bg-primary' : 'bg-muted'
+              }`} />
+            )}
           </div>
-          {index < steps.length - 1 && (
-            <div className={`w-16 md:w-24 h-0.5 mx-2 ${
-              currentStep > step.number ? 'bg-primary' : 'bg-muted'
-            }`} />
-          )}
-        </div>
-      ))}
-    </div>
-  );
+        ))}
+      </div>
+    );
+  };
 
   const renderStep = () => {
     switch (currentStep) {
@@ -253,55 +270,70 @@ const ApplicationForm = () => {
     }
   };
 
+  // Show sidebar for steps 2, 3, 4 (Uw informatie, Paspoort, Kassa)
+  const showSidebar = currentStep >= 2;
+
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
+    <div className="container mx-auto px-4 py-8 max-w-6xl">
       {renderStepIndicator()}
       
-      <Card className="border-0 shadow-lg bg-card/95 backdrop-blur-sm">
-        <CardContent className="p-6 md:p-8">
-          {renderStep()}
-          
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t">
-            <Button
-              variant="ghost"
-              onClick={handlePrevious}
-              disabled={currentStep === 1}
-              className="flex items-center gap-2 text-primary hover:text-primary/80 hover:bg-transparent order-2 sm:order-1"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Vorige
-            </Button>
-            
-            {currentStep < totalSteps ? (
-              <Button 
-                onClick={handleNext} 
-                className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-lg font-semibold rounded-lg order-1 sm:order-2 w-full sm:w-auto"
-              >
-                Doorgaan
-                <ChevronRight className="ml-2 h-5 w-5" />
-              </Button>
-            ) : (
-              <Button 
-                onClick={handleSubmit} 
-                disabled={isSubmitting}
-                className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-lg font-semibold rounded-lg order-1 sm:order-2 w-full sm:w-auto"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Verwerken...
-                  </>
-                ) : (
-                  <>
-                    Doorgaan naar betaling
-                    <ChevronRight className="ml-2 h-5 w-5" />
-                  </>
-                )}
-              </Button>
-            )}
+      <div className={`grid gap-8 ${showSidebar ? 'lg:grid-cols-[1fr,380px]' : ''}`}>
+        <Card className="border-0 shadow-lg bg-card/95 backdrop-blur-sm">
+          <CardContent className="p-6 md:p-8">
+            {renderStep()}
+          </CardContent>
+        </Card>
+
+        {showSidebar && (
+          <div className="hidden lg:block">
+            <OrderSidebar 
+              step={currentStep} 
+              travelers={travelers.length}
+              selectedProcessing={selectedProcessing}
+              governmentFee={governmentFee}
+            />
           </div>
-        </CardContent>
-      </Card>
+        )}
+      </div>
+
+      {/* Full width button section */}
+      <div className="mt-6">
+        <Button 
+          onClick={currentStep < internalTotalSteps ? handleNext : handleSubmit} 
+          disabled={currentStep === internalTotalSteps && isSubmitting}
+          className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-6 text-lg font-semibold rounded-lg"
+        >
+          {currentStep === internalTotalSteps ? (
+            isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                Verwerken...
+              </>
+            ) : (
+              <>
+                Opslaan en doorgaan
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </>
+            )
+          ) : (
+            <>
+              Opslaan en doorgaan
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </>
+          )}
+        </Button>
+
+        {currentStep > 1 && (
+          <Button
+            variant="ghost"
+            onClick={handlePrevious}
+            className="w-full mt-3 flex items-center justify-center gap-2 text-primary hover:text-primary/80 hover:bg-transparent"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Vorige
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

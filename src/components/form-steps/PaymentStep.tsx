@@ -35,14 +35,14 @@ const processingOptions: ProcessingOption[] = [
     id: "urgent",
     name: "Dringend",
     time: "1 uur verwerking",
-    price: 139.95,
+    price: 119.95,
     icon: <Zap className="h-5 w-5" />,
   },
   {
     id: "fast",
     name: "Snel",
     time: "4 uur verwerking",
-    price: 99.95,
+    price: 79.95,
     icon: <Timer className="h-5 w-5" />,
     popular: true,
   },
@@ -50,15 +50,12 @@ const processingOptions: ProcessingOption[] = [
     id: "standard",
     name: "Standaard",
     time: "24 uur verwerking",
-    price: 69.95,
+    price: 49.95,
     icon: <Clock className="h-5 w-5" />,
   },
 ];
 
 const PaymentStep = ({ travelers, selectedOption, setSelectedOption }: PaymentStepProps) => {
-  const selectedPricing = processingOptions.find(o => o.id === selectedOption);
-  const totalPrice = selectedPricing ? selectedPricing.price * travelers.length : 0;
-
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -110,36 +107,6 @@ const PaymentStep = ({ travelers, selectedOption, setSelectedOption }: PaymentSt
             </div>
           </Card>
         ))}
-      </div>
-
-      <Card className="p-6 bg-muted/30 border-0">
-        <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Verenigd Koninkrijk ETA</span>
-            <span className="text-muted-foreground">{travelers.length} Reiziger{travelers.length > 1 ? 's' : ''}</span>
-          </div>
-          
-          {selectedPricing && (
-            <div className="flex justify-between items-center">
-              <span className="text-muted-foreground">{selectedPricing.name}, {selectedPricing.time}</span>
-              <span className="text-muted-foreground">€ {(selectedPricing.price * travelers.length).toFixed(2)}</span>
-            </div>
-          )}
-          
-          <div className="border-t pt-4 flex justify-between items-center">
-            <span className="text-lg font-bold text-foreground">Totaal</span>
-            <span className="text-2xl font-bold text-foreground">€ {totalPrice.toFixed(2)}</span>
-          </div>
-          <p className="text-xs text-muted-foreground">(Inclusief belastingen en toeslagen)</p>
-        </div>
-      </Card>
-
-      <div className="flex items-start gap-3 p-4 bg-primary/5 rounded-lg">
-        <Shield className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-        <div>
-          <p className="font-medium text-foreground">Je gegevens worden beschermd volgens de hoogste beveiligingsnormen.</p>
-          <p className="text-sm text-muted-foreground">Wij gebruiken SSL-encryptie om je persoonlijke gegevens te beschermen.</p>
-        </div>
       </div>
     </div>
   );
