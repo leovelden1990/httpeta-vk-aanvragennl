@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Plane, Mail, Phone, MapPin, Shield, Facebook, Twitter, Instagram } from "lucide-react";
+import { Plane, Mail, Phone, MapPin, Shield } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const Footer = () => {
@@ -15,24 +15,13 @@ const Footer = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-lg font-bold leading-none">UK ETA Service</span>
-                <span className="text-xs text-muted-foreground">Officiële aanvraag partner</span>
+                <span className="text-xs text-muted-foreground">Uw ETA aanvraagservice</span>
               </div>
             </Link>
             <p className="text-sm text-muted-foreground">
-              Uw betrouwbare partner voor UK Electronic Travel Authorisation aanvragen. 
+              UK Electronic Travel Authorisation aanvragen. 
               Snel, veilig en professioneel.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-muted-foreground transition-colors hover:text-primary">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-muted-foreground transition-colors hover:text-primary">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-muted-foreground transition-colors hover:text-primary">
-                <Instagram className="h-5 w-5" />
-              </a>
-            </div>
           </div>
 
           {/* Services */}
@@ -128,7 +117,7 @@ const Footer = () => {
           </p>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Shield className="h-4 w-4" />
-            <span>SSL Beveiligd | KVK: 12345678</span>
+            <span>SSL Beveiligd | KVK: 96242302</span>
           </div>
         </div>
       </div>
