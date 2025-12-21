@@ -1,0 +1,145 @@
+import { Card } from "@/components/ui/card";
+import { Calendar, Plane, Clock, Shield } from "lucide-react";
+
+interface OrderSidebarProps {
+  step: number;
+  travelers?: number;
+  selectedProcessing?: string;
+  governmentFee?: number;
+}
+
+const processingPrices: Record<string, { name: string; time: string; price: number }> = {
+  urgent: { name: "Dringend", time: "1 uur", price: 119.95 },
+  fast: { name: "Snel", time: "4 uur", price: 79.95 },
+  standard: { name: "Standaard", time: "24 uur", price: 49.95 },
+};
+
+const OrderSidebar = ({ step, travelers = 1, selectedProcessing = "fast", governmentFee = 19.28 }: OrderSidebarProps) => {
+  const selectedOption = processingPrices[selectedProcessing];
+  const processingTotal = selectedOption ? selectedOption.price * travelers : 0;
+  const governmentTotal = governmentFee * travelers;
+  const total = processingTotal + governmentTotal;
+
+  // UK Flag SVG
+  const UKFlag = () => (
+    <svg viewBox="0 0 60 30" className="w-10 h-6 rounded shadow-sm">
+      <clipPath id="uk-clip">
+        <rect width="60" height="30" rx="2" />
+      </clipPath>
+      <g clipPath="url(#uk-clip)">
+        <rect width="60" height="30" fill="#012169" />
+        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6" />
+        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" strokeWidth="4" clipPath="url(#uk-center)" />
+        <path d="M30,0 V30 M0,15 H60" stroke="#fff" strokeWidth="10" />
+        <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" strokeWidth="6" />
+      </g>
+    </svg>
+  );
+
+  // Show basic info for steps 2 & 3 (passport)
+  if (step === 2 || step === 3) {
+    return (
+      <Card className="p-6 border shadow-sm bg-card">
+        <div className="flex items-center gap-3 mb-6">
+          <UKFlag />
+          <h3 className="text-xl font-bold text-foreground">United Kingdom ETA</h3>
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex items-center gap-4 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/30">
+            <div className="p-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/50">
+              <Calendar className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Geldig gedurende</p>
+              <p className="font-semibold text-foreground">2 jaar na afgifte</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4 p-4 rounded-xl bg-blue-50 dark:bg-blue-950/30">
+            <div className="p-3 rounded-xl bg-blue-100 dark:bg-blue-900/50">
+              <Plane className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Aantal reizen</p>
+              <p className="font-semibold text-foreground">Meermaals inreizen</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30">
+            <div className="p-3 rounded-xl bg-amber-100 dark:bg-amber-900/50">
+              <Clock className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Maximaal verblijf</p>
+              <p className="font-semibold text-foreground">180 dagen per verblijf</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 pt-4 border-t">
+          <div className="flex justify-between items-center text-muted-foreground">
+            <span>Totaal</span>
+            <span>Berekend bij kassa</span>
+          </div>
+        </div>
+
+        <div className="mt-6 flex items-start gap-3 p-4 bg-primary/5 rounded-lg">
+          <Shield className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="font-medium text-sm text-foreground">Wij beschermen uw gegevens.</p>
+            <p className="text-xs text-muted-foreground">Bekijk ons privacybeleid</p>
+          </div>
+        </div>
+      </Card>
+    );
+  }
+
+  // Show checkout summary for step 4 (kassa)
+  if (step === 4) {
+    return (
+      <Card className="p-6 border shadow-sm bg-card">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <UKFlag />
+            <span className="font-semibold text-foreground">United Kingdom ETA</span>
+          </div>
+          <span className="text-muted-foreground">{travelers} Reiziger{travelers > 1 ? 's' : ''}</span>
+        </div>
+
+        <div className="space-y-3 py-4 border-t border-b">
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">Overheidskosten</span>
+            <span className="text-muted-foreground">€ {governmentTotal.toFixed(2)}</span>
+          </div>
+          {selectedOption && (
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">{selectedOption.name}, {selectedOption.time}</span>
+              <span className="text-muted-foreground">€ {processingTotal.toFixed(2)}</span>
+            </div>
+          )}
+        </div>
+
+        <div className="flex justify-between items-center mt-4">
+          <div>
+            <span className="text-lg font-bold text-foreground">Totaal</span>
+            <p className="text-xs text-muted-foreground">(Inclusief belastingen en toeslagen)</p>
+          </div>
+          <span className="text-2xl font-bold text-foreground">€ {total.toFixed(2)}</span>
+        </div>
+
+        <div className="mt-6 flex items-start gap-3 p-4 bg-primary/5 rounded-lg">
+          <Shield className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="font-medium text-sm text-foreground">Wij beschermen uw gegevens.</p>
+            <p className="text-xs text-muted-foreground">Bekijk ons privacybeleid</p>
+          </div>
+        </div>
+      </Card>
+    );
+  }
+
+  return null;
+};
+
+export default OrderSidebar;
