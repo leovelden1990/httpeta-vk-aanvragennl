@@ -112,9 +112,9 @@ const OrderSidebar = ({
   );
 
   return (
-    <div className="flex flex-col">
-      {/* Main sidebar card */}
-      <Card className="p-6 border shadow-sm bg-card rounded-none lg:rounded-tr-2xl">
+    <div className="flex flex-col h-full">
+      {/* Main sidebar card - grows to fill space */}
+      <Card className="p-6 border shadow-sm bg-card rounded-none lg:rounded-tr-2xl flex-1">
         <div className="flex items-center gap-3 mb-6">
           <UKFlag />
           <div>
